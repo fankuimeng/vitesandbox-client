@@ -90,8 +90,7 @@ window.addEventListener('message', ({ data }) => {
     const { files, busid: _busid, wcid: _wcid } = data.payload
     let newFiles = {}
     Object.entries(files).forEach(([key, value]) => {
-      const reg = ['jsx', 'tsx', 'ts'].find((item) => key.endsWith(item))
-      const newKey = key.replace(reg, 'js')
+      const newKey = key.replace(/(jsx|ts|tsx)$/, 'js')
       newFiles[newKey] = tsTojs(key, value)
     })
     if (sandboxClient) {
@@ -103,3 +102,7 @@ window.addEventListener('message', ({ data }) => {
     }
   }
 })
+
+const reg = /(jsx|ts|tsx)$/
+
+console.log(reg.test('index.ts'))
